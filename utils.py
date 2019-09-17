@@ -22,8 +22,6 @@ def merge_data(dir_path):
     new_label = new_label.T.flatten()
     data_positive = data_positive_unlabel[new_label == 1]
     np.save(dir_path+'/data_merge'+'/data_positive.npy', data_positive)
-    data_unlabel = data_positive_unlabel[new_label == 0]
-    np.save(dir_path+'/data_merge'+'/data_unlabel.npy', data_unlabel)
 
     data_negative = []
     for i in range(drug_data.shape[0]):
@@ -241,10 +239,9 @@ def random_mini_batches(X, Y, mini_batch_size=64):
         mini_batch = (mini_batch_X, mini_batch_Y)
         mini_batches.append(mini_batch)
     return mini_batches
-def load_data(negative_sample_num,dataset_name):
-    data_positive = np.load('/home/yj/data_bio/Data/after_merge/'+dataset_name+'/data_merge/data_positive.npy')
-    data_negative = equalization_sampling_data('/home/yj/data_bio/Data/after_merge/'+dataset_name, negative_sample_num)
-    data_unlabel = np.load('/home/yj/data_bio/Data/after_merge/'+dataset_name+'/data_merge/data_unlabel.npy')
+def load_data(path,negative_sample_num,dataset_name):
+    data_positive = np.load(path+dataset_name+'/data_merge/data_positive.npy')
+    data_negative = equalization_sampling_data(path+dataset_name, negative_sample_num)
 
     X = np.concatenate([data_positive, data_negative], axis=0)
     y = np.zeros(X.shape[0])
@@ -258,13 +255,12 @@ def load_data(negative_sample_num,dataset_name):
     scaler = StandardScaler()
     scaler.fit(X)
     X = scaler.transform(X)
-    data_unlabel = scaler.transform(data_unlabel)
+
     return X, y, data_unlabel
 
-def load_data2(negative_sample_num,dataset_name):
-    data_positive = np.load('/home/yj/data_bio/Data/after_merge/'+dataset_name+'/data_merge/data_positive.npy')
-    data_negative = equalization_sampling_data('/home/yj/data_bio/Data/after_merge/'+dataset_name, negative_sample_num)
-    X_unlabeled = np.load('/home/yj/data_bio/Data/after_merge/'+dataset_name+'/data_merge/data_unlabel.npy')
+def load_data2(path,negative_sample_num,dataset_name):
+    data_positive = np.load(path+dataset_name+'/data_merge/data_positive.npy')
+    data_negative = equalization_sampling_data(path+dataset_name, negative_sample_num)
     X_labeled = np.concatenate([data_positive, data_negative], axis=0)
     y_labeled = np.zeros(X_labeled.shape[0])
     y_labeled[:data_positive.shape[0]] = 1
@@ -276,5 +272,4 @@ def load_data2(negative_sample_num,dataset_name):
     scaler = StandardScaler()
     scaler.fit(X_labeled)
     X_labeled = scaler.transform(X_labeled)
-    X_unlabeled = scaler.transform(X_unlabeled)
-    return X_labeled, y_labeled, X_unlabeled
+    return X_labeled, y_labeled
