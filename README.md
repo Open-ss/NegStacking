@@ -9,7 +9,7 @@ This is the repository containing the source code for research, namely NegStacki
 * python 3.6
 
 ## How it works
-The data folder contains the data set used in the experiment, including multiple cell line data. In this sudy, we used drug perturbation and gene knockout transcriptome data from the following seven cell lines: PC3, VCAP, A375, HEPG2, HCC515, HA1E, and A549, containing enough data for training.u
+The data folder contains the data set used in the experiment, including multiple cell line data. In this sudy, we used drug perturbation and gene knockout transcriptome data from the following seven cell lines: PC3, VCAP, A375, HEPG2, HCC515, HA1E, and A549, containing enough data for training.
 
 used_models.py is the model source file.
 
