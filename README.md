@@ -18,3 +18,6 @@ utils.py is is the tool methods source file.
 sensitive_*.py are the model parameter sensitivity analysis source file.
 
 compare.py is the source code file of the model compared with the conventional machine learning methods.
+
+## How it works
+Thanks!
